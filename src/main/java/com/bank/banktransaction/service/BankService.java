@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.bank.banktransaction.model.AddAccount;
 import com.bank.banktransaction.model.AddAmount;
 import com.bank.banktransaction.model.TransactionDetails;
 import com.bank.banktransaction.model.User;
 import com.bank.banktransaction.repository.BankRepository;
+import com.bank.banktransaction.repository.addAccountRepositorry;
 import com.bank.banktransaction.repository.addamountRepository;
 import com.bank.banktransaction.repository.addamountupdateRepository;
 import com.bank.banktransaction.repository.transactionRepository;
@@ -36,6 +38,10 @@ public class BankService {
 	
 	@Autowired
 	private transactionRepository transactionrepostory;
+	
+	
+	@Autowired
+	private addAccountRepositorry accountrepository;
 		
 	
     public void saveuser(User user) {
@@ -60,26 +66,26 @@ public class BankService {
 //}
     
     public void deposit(AddAmount addAmount) {
-balanceRepostory.updatebalance(addAmount.getBalance(),addAmount.getUserid()) ;
-//transaction.setUserid(addAmount.getUserid());
-//transaction.setAccountnumber(addAmount.getAccountnumber());
-//transaction.setReceiveraccount(addAmount.getAccountnumber());
-//transaction.setAmount(addAmount.getBalance());
-//transaction.setDetails("Credit");
-// TransactionDetails transaction
-//Timestamp timestamp=new Timestamp(System.currentTimeMillis());
-//String instanceNow3 = timestamp.toString();
-//transaction.setTime(instanceNow3);
-//transactionrepostory.save(transaction);
-    }
-//	public void getUserById(long id) {
-//		Optional<AddAmount> optional = amountRepostory.findById(id);
-//		AddAmount addamount = null;
-//		if (optional.isPresent()) {
-//			addamount = optional.get();
-//		} else {
-//			throw new RuntimeException(" AddAmount not found for id :: " + id);
-//		}
-//		
-//}
+    	
+balanceRepostory.updatebalance(addAmount.getBalance(),addAmount.getUserid(),addAmount.getAccountnumber()) ;
+   
+   TransactionDetails transaction = new TransactionDetails();
+   
+  transaction.setUserid(addAmount.getUserid());
+  transaction.setAccountnumber(addAmount.getAccountnumber());
+  transaction.setReceiveraccount(addAmount.getAccountnumber());
+  transaction.setBalance(addAmount.getBalance());
+  transaction.setDetails("Credit");
+
+  Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+  String instanceNow3 = timestamp.toString();
+  transaction.setTime(instanceNow3);
+  transactionrepostory.save(transaction);
 	}
+    
+    public void addAccount(AddAccount addAccount) {
+    	accountrepository.save(addAccount);
+    
+
+}
+}

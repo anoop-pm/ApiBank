@@ -6,6 +6,7 @@ package com.bank.banktransaction.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.banktransaction.exception.ResourceNotFoundException;
+import com.bank.banktransaction.model.AddAccount;
 import com.bank.banktransaction.model.AddAmount;
 import com.bank.banktransaction.model.TransactionDetails;
 import com.bank.banktransaction.model.User;
@@ -49,7 +52,7 @@ public class BankController {
 		}
 		
 		// Add UserAccount
-		@PostMapping("/add")
+		@PostMapping("/useraccount")
 		public AddAmount add(@RequestBody AddAmount amount) {
 			service.addamount(amount);
 		
@@ -69,9 +72,30 @@ public class BankController {
 		
 		@PutMapping("/deposit")
 		public String deposit(@RequestBody AddAmount amount) {
+
 			service.deposit(amount) ;
 			System.out.println("Credited");
 			return "Credited :- "+amount.getBalance();
+		
+		}
+		
+		
+//		@PutMapping("/deposit")
+//		 ResponseEntity<String> deposit(@RequestBody AddAmount amount) {
+//
+//			service.deposit(amount) ;
+//			System.out.println("Credited");
+//			return ResponseEntity.ok("User is valid");
+//		}
+		
+		
+		@PostMapping("/addaccount")
+		public AddAccount add(@RequestBody AddAccount addAccount) {
+			
+			
+			service.addAccount(addAccount);
+		
+			return addAccount;
 		}
 		
 		

@@ -26,24 +26,36 @@ public class TransactionDetails {
 	    private int receiveraccount;
 	   
 	   @Column(name = "amount",  length = 20)
-	    private int amount;
+	    private int balance;
 	   
 	   @Column(name = "details",  length = 20)
 	    private String details;
 	     
-	    @Column(name = "time",  length = 20)
+	    @Column(name = "time",  length = 220)
 	    private String time;
 
-		public TransactionDetails(int userid, int accountnumber, int receiveraccount, int amount, String details,
-				String time) {
+//		public TransactionDetails(int userid, int accountnumber, int receiveraccount, int balance, String details,
+//				String time) {
+//			super();
+//			this.userid = userid;
+//			this.accountnumber = accountnumber;
+//			this.receiveraccount = receiveraccount;
+//			this.balance = balance;
+//			this.details = details;
+//			this.time = time;
+//		}
+
+	
+
+		public TransactionDetails() {
 			super();
-			this.userid = userid;
-			this.accountnumber = accountnumber;
-			this.receiveraccount = receiveraccount;
-			this.amount = amount;
-			this.details = details;
-			this.time = time;
+			// TODO Auto-generated constructor stub
 		}
+
+
+
+
+
 
 		public Long getId() {
 			return id;
@@ -77,12 +89,12 @@ public class TransactionDetails {
 			this.receiveraccount = receiveraccount;
 		}
 
-		public int getAmount() {
-			return amount;
+		public int getBalance() {
+			return balance;
 		}
 
-		public void setAmount(int amount) {
-			this.amount = amount;
+		public void setBalance(int balance) {
+			this.balance = balance;
 		}
 
 		public String getDetails() {

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "useraccounts")
 public class AddAmount {
@@ -15,17 +16,18 @@ public class AddAmount {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 	    
-	  
-	   @Column(name = "userid",  length = 20)
+	  @NotBlank(message = "Userid is mandatory")
+	   @Column(name = "userid", unique = true,  length = 20)
 	    private int userid;
-	   
+	  @NotBlank(message = "accountnumber is mandatory")
 	   @Column(name = "accountnumber",  length = 20)
 	    private int accountnumber;
 //	   
 //	   @Column(name = "transactiontype",  length = 20)
 //	    private String transactiontype;
 //	   
-	   @Column(name = "accountbalance",  length = 20)
+	   @Column(name = "accountbalance", unique = true,  length = 20)
+	   @NotBlank(message = "Deposit is mandatory")
 	    private int balance;
 
 	public AddAmount(int userid, int accountnumber, String transactiontype, int balance) {
