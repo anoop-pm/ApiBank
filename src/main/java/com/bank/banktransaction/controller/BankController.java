@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.banktransaction.constants.BankConstant;
 import com.bank.banktransaction.exception.ResourceNotFoundException;
 import com.bank.banktransaction.model.AddAccount;
 import com.bank.banktransaction.model.AddAmount;
@@ -71,13 +72,14 @@ public class BankController {
 //		}
 		
 		@PutMapping("/deposit")
-		public String deposit(@RequestBody AddAmount amount) {
-
+		public void deposit(@RequestBody AddAmount amount) {
+			System.out.println(BankConstant.Erroraccount);
 			service.deposit(amount) ;
-			System.out.println("Credited");
-			return "Credited :- "+amount.getBalance();
 		
-		}
+			}
+		
+		
+		
 		
 		
 //		@PutMapping("/deposit")
