@@ -72,9 +72,11 @@ public class BankController {
 //		}
 		
 		@PutMapping("/deposit")
-		public void deposit(@RequestBody AddAmount amount) {
-			System.out.println(BankConstant.Erroraccount);
+		public AddAmount deposit(@RequestBody AddAmount amount) {
+		
 			service.deposit(amount) ;
+			
+			return amount;
 		
 			}
 		

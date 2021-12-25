@@ -22,6 +22,7 @@ import com.bank.banktransaction.repository.BankRepository;
 import com.bank.banktransaction.repository.addAccountRepositorry;
 import com.bank.banktransaction.repository.addamountRepository;
 import com.bank.banktransaction.repository.addamountupdateRepository;
+import com.bank.banktransaction.repository.findUserid;
 import com.bank.banktransaction.repository.findaccountnumberRepository;
 import com.bank.banktransaction.repository.transactionRepository;
 
@@ -49,6 +50,10 @@ public class BankService {
 	
 	@Autowired
 	private findaccountnumberRepository findaccountnumber;
+	
+	@Autowired
+	private findUserid finduser;
+		
 		
 	
     public void saveuser(User user) {
@@ -74,25 +79,29 @@ public class BankService {
     
     public void deposit(AddAmount addAmount) {
     	
-balanceRepostory.updatebalance(addAmount.getBalance(),addAmount.getUserid(),addAmount.getAccountnumber()) ;
-   //validation
+  //validation
 
  int accountno=0;
+ int userid=0;
 try {
 accountno=findaccountnumber.getaccountnumber(addAmount.getAccountnumber());
+userid=finduser.getuserid(addAmount.getAccountnumber());
+addAmount.setUserid(userid);
+balanceRepostory.updatebalance(addAmount.getBalance(),addAmount.getAccountnumber(),userid) ;
 
+System.out.println(userid);
 }
 catch (Exception e) {
-	System.out.println(e.getMessage());
+	System.out.println("The Account Number Not Match"+e.getMessage());
 	
-	
+	System.out.println(userid);
 }
-System.out.print(accountno);
+
 int getaccountno=addAmount.getAccountnumber();
 if (accountno == getaccountno){
    TransactionDetails transaction = new TransactionDetails();
    //code to find user id
-  transaction.setUserid(addAmount.getUserid());
+  transaction.setUserid(userid);
   transaction.setAccountnumber(addAmount.getAccountnumber());
   transaction.setReceiveraccount(addAmount.getAccountnumber());
   transaction.setBalance(addAmount.getBalance());
