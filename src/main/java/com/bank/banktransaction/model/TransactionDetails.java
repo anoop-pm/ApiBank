@@ -26,7 +26,7 @@ public class TransactionDetails {
 	    private int receiveraccount;
 	   
 	   @Column(name = "amount",  length = 20)
-	    private int balance;
+	    private int amount;
 	   
 	   @Column(name = "details",  length = 20)
 	    private String details;
@@ -89,13 +89,25 @@ public class TransactionDetails {
 			this.receiveraccount = receiveraccount;
 		}
 
-		public int getBalance() {
-			return balance;
+	
+
+		public int getAmount() {
+			return amount;
 		}
 
-		public void setBalance(int balance) {
-			this.balance = balance;
+
+
+
+
+
+		public void setAmount(int amount) {
+			this.amount = amount;
 		}
+
+
+
+
+
 
 		public String getDetails() {
 			return details;

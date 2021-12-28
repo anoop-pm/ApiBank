@@ -29,15 +29,15 @@ public class AddAmount {
 //	    private String transactiontype;
 //	   
 //	  @NotEmpty(message = "Deposit is mandatory")
-	   @Column(name = "balance", unique = true,  length = 20)
-	    private int balance;
+	   @Column(name = "deposit", unique = true,  length = 20)
+	    private int deposit;
 public AddAmount( int userid,
 		 int accountnumber,
-		 int balance) {
+		 int deposit) {
 	super();
 	this.userid = userid;
 	this.accountnumber = accountnumber;
-	this.balance = balance;
+	this.deposit = deposit;
 }
 public Long getId() {
 	return id;
@@ -57,12 +57,13 @@ public int getAccountnumber() {
 public void setAccountnumber(int accountnumber) {
 	this.accountnumber = accountnumber;
 }
-public int getBalance() {
-	return balance;
+public int getDeposit() {
+	return deposit;
 }
-public void setBalance(int balance) {
-	this.balance = balance;
+public void setDeposit(int deposit) {
+	this.deposit = deposit;
 }
+
 
 
 	

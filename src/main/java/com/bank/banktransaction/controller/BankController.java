@@ -101,7 +101,14 @@ public class BankController {
 		
 			return addAccount;
 		}
+		@PutMapping("/transferamount")
+		public TransactionDetails tranfer(@RequestBody TransactionDetails amounttransfer) {
 		
+			service.creditamount(amounttransfer) ;
+			
+			return amounttransfer;
+		
+			}
 		
 		
 		}

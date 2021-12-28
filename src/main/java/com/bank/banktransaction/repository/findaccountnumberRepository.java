@@ -20,6 +20,10 @@ public interface findaccountnumberRepository extends JpaRepository <AddAmount, I
 //
 	@Query(value="select accountnumber from useraccounts u where u.accountnumber =:Anumber", nativeQuery=true)
 	Integer getaccountnumber(@Param("Anumber") int Anumber);
+	
+
+	@Query(value="select senderaccountnumber from accounts u where u.senderaccountnumber =:Bnumber", nativeQuery=true)
+	Integer getreceiveraccountnumber(@Param("Bnumber") int Bnumber);
 
 	 
 }

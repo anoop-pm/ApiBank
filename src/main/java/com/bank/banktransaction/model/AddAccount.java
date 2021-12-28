@@ -15,11 +15,9 @@ public class AddAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-  
-  
-   
-   @Column(name = "accountnumber", unique = true,  length = 200)
-    private int accountnumber;
+
+   @Column(name = "senderaccountnumber", unique = true,  length = 200)
+    private int senderaccountnumber;
    
    @Column(name = "name",  length = 200)
    private String name;
@@ -30,9 +28,14 @@ public class AddAccount {
    @Column(name = "ifsccode",  length = 200)
    private String ifsccode;
 
-public AddAccount(int accountnumber, String name, String bankname, String ifsccode) {
+public AddAccount() {
 	super();
-	this.accountnumber = accountnumber;
+	// TODO Auto-generated constructor stub
+}
+
+public AddAccount(int senderaccountnumber, String name, String bankname, String ifsccode) {
+	super();
+	this.senderaccountnumber = senderaccountnumber;
 	this.name = name;
 	this.bankname = bankname;
 	this.ifsccode = ifsccode;
@@ -46,12 +49,12 @@ public void setId(Long id) {
 	this.id = id;
 }
 
-public int getAccountnumber() {
-	return accountnumber;
+public int getSenderaccountnumber() {
+	return senderaccountnumber;
 }
 
-public void setAccountnumber(int accountnumber) {
-	this.accountnumber = accountnumber;
+public void setSenderaccountnumber(int senderaccountnumber) {
+	this.senderaccountnumber = senderaccountnumber;
 }
 
 public String getName() {
@@ -77,7 +80,6 @@ public String getIfsccode() {
 public void setIfsccode(String ifsccode) {
 	this.ifsccode = ifsccode;
 }
-   
    
 
 }

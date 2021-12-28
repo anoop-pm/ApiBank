@@ -24,8 +24,8 @@ public interface addamountupdateRepository extends JpaRepository <AddAmount, Int
 	
 	 @Transactional
 	 @Modifying
-		@Query("UPDATE AddAmount SET balance   = balance + :balance,userid=:userid WHERE  accountnumber = :accountnumber")
-		Integer updatebalance(int balance,int accountnumber,int userid);
+		@Query("UPDATE AddAmount SET deposit   = deposit + :deposit,userid=:userid WHERE  accountnumber = :accountnumber")
+		Integer updatebalance(int deposit,int accountnumber,int userid);
 
 	
 }
