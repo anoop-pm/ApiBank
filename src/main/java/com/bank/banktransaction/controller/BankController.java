@@ -2,25 +2,28 @@ package com.bank.banktransaction.controller;
 
 
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.banktransaction.constants.BankConstant;
-import com.bank.banktransaction.exception.ResourceNotFoundException;
+
 import com.bank.banktransaction.model.AddAccount;
 import com.bank.banktransaction.model.AddAmount;
 import com.bank.banktransaction.model.TransactionDetails;
 import com.bank.banktransaction.model.User;
-import com.bank.banktransaction.repository.addamountupdateRepository;
+import com.bank.banktransaction.repository.GetamountbalanceRepository;
+import com.bank.banktransaction.repository.findUserid;
+import com.bank.banktransaction.repository.findaccountnumberRepository;
 //import com.bank.banktransaction.repository.addamountupdateRepository;
 import com.bank.banktransaction.service.BankService;
 
@@ -31,33 +34,34 @@ public class BankController {
 //	 private static final Logger logger = LogManager.getLogger(BankController.class);
 //	
 //
-
 	
+	@Autowired
+	private findUserid finduserid;
+
+	@Autowired
+	private	findaccountnumberRepository accontno;
     @Autowired
     private BankService service;
     
-	@Autowired
-	private addamountupdateRepository balanceRepostory;
-	
-
-	
+    @Autowired
+	private GetamountbalanceRepository balancerepository;
 	
 		
 		// Register a User
 		@PostMapping("/user")
-		public User createUser(@RequestBody User user) {
-			service.saveuser(user);
-//			logger.debug("Created A user",user);
-
-			return user;
+		public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
+			
+			String savedUser = service.saveuser(user);
+			return new ResponseEntity<String>(savedUser, HttpStatus.CREATED);
 		}
 		
 		// Add UserAccount
 		@PostMapping("/useraccount")
-		public AddAmount add(@RequestBody AddAmount amount) {
-			service.addamount(amount);
-		
-			return amount;
+		public ResponseEntity<String> add(@Valid @RequestBody AddAmount amount) {
+			
+				String Depositreport=service.addamount(amount);
+			
+			return new ResponseEntity<String>(Depositreport, HttpStatus.CREATED);
 		}
 		
 //		
@@ -72,11 +76,11 @@ public class BankController {
 //		}
 		
 		@PutMapping("/deposit")
-		public AddAmount deposit(@RequestBody AddAmount amount) {
+		public String deposit(@RequestBody AddAmount amount) {
 		
-			service.deposit(amount) ;
+		String result=	service.deposit(amount) ;
 			
-			return amount;
+			return result;
 		
 			}
 		
@@ -94,21 +98,49 @@ public class BankController {
 		
 		
 		@PostMapping("/addaccount")
-		public AddAccount add(@RequestBody AddAccount addAccount) {
+		public ResponseEntity<String> add(@Valid @RequestBody AddAccount addAccount) {
 			
 			
-			service.addAccount(addAccount);
+			String result = service.addAccount(addAccount);
 		
-			return addAccount;
+			return new ResponseEntity<String>(result, HttpStatus.CREATED);
 		}
-		@PutMapping("/transferamount")
-		public TransactionDetails tranfer(@RequestBody TransactionDetails amounttransfer) {
 		
-			service.creditamount(amounttransfer) ;
+		
+		@PutMapping("/transferamount")
+		public String tranfer(@RequestBody TransactionDetails amounttransfer) {
+		
 			
-			return amounttransfer;
+			try {
+				service.creditamount(amounttransfer) ;
+			Thread.sleep(7000); 
+			}
+			catch(Exception e)
+			{
+				System.out.println(e.getMessage());
+			}
+		   String report=service.messagereader();
+			return report;
 		
 			}
+		
+		
+		@GetMapping("/checkbalance")
+		public ResponseEntity<String> balancec(@Valid @RequestBody AddAmount amount) {
+			
+			int b=service.balancechek(amount);
+			
+			String report=null;
+			if (b==0)
+					{
+				report="not valid account number";
+					}
+			else {
+				report=String.valueOf(b);
+			}
+
+			return new ResponseEntity<String>(String.valueOf(report), HttpStatus.CREATED);
+		}
 		
 		
 		}

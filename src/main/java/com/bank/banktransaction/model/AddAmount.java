@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "useraccounts")
 public class AddAmount {
@@ -18,19 +19,25 @@ public class AddAmount {
 	    private Long id;
 	    
 //	  @NotBlank(message = "Userid is mandatory")
-	   @Column(name = "userid", unique = true,  length = 20)
+	   @Column(name = "userid",  length = 20)
+	   @NotNull
 	    private int userid;
 	  
 //	  @NotBlank(message = "accountnumber is mandatory")
-	   @Column(name = "accountnumber",  unique = true,  length = 200)
+	   	@Column(name = "accountnumber",   length = 200)
+	   	@NotNull
 	    private int accountnumber;
 //	   
 //	   @Column(name = "transactiontype",  length = 20)
 //	    private String transactiontype;
 //	   
 //	  @NotEmpty(message = "Deposit is mandatory")
-	   @Column(name = "deposit", unique = true,  length = 20)
+	   	@Column(name = "deposit",  length = 20)
+	   	@NotNull
 	    private int deposit;
+	   	
+	   	
+	   	
 public AddAmount( int userid,
 		 int accountnumber,
 		 int deposit) {

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "accounts")
@@ -15,16 +16,19 @@ public class AddAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-
+	@NotNull
    @Column(name = "senderaccountnumber", unique = true,  length = 200)
     private int senderaccountnumber;
    
+	@NotNull
    @Column(name = "name",  length = 200)
    private String name;
-   
+	
+	@NotNull
    @Column(name = "bankname",  length = 200)
    private String bankname;
    
+	@NotNull
    @Column(name = "ifsccode",  length = 200)
    private String ifsccode;
 

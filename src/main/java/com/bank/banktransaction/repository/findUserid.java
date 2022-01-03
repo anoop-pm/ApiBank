@@ -16,6 +16,10 @@ public interface findUserid extends JpaRepository <AddAmount, Integer>
 //
 	@Query(value="select userid from useraccounts u where u.accountnumber =:Anumber", nativeQuery=true)
 	Integer getuserid(@Param("Anumber") int Anumber);
+	
+	
+	@Query(value="select id from users u where u.id =:uid", nativeQuery=true)
+	Integer getuserbyid(@Param("uid") int uid);
 
 	 
 }
