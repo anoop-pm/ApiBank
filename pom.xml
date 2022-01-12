@@ -58,11 +58,13 @@
     <version>20211205</version>
 </dependency>
         
+     
+     <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
         
 		<dependency>
-		
-	
-		
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -84,7 +86,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-		
 		 <!--for logging purposes-->
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
@@ -100,8 +101,7 @@
       
         </dependency>
         
-        
-        
+       
 		
 		<dependency> 
     <groupId>org.springframework.boot</groupId> 
@@ -109,16 +109,14 @@
 </dependency>
 	</dependencies>
 	
-	
-	
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</build>
 
 </project>

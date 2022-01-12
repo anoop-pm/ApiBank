@@ -12,8 +12,12 @@ import com.bank.banktransaction.model.TransactionDetails;
 public interface transactionRepository  extends JpaRepository <TransactionDetails, Long>{
 	
 	
-	@Query(value="select message from messages u where u.messageid =:messageidss", nativeQuery=true)
+	@Query(value="select message from messages u where u.mid =:messageidss", nativeQuery=true)
 	String message(@Param("messageidss") int messageidss);
+	
+	
+	@Query(value="select status from messages u where u.mid =:messageidssa", nativeQuery=true)
+	String status(@Param("messageidssa") int messageidssa);
 
 	
 	

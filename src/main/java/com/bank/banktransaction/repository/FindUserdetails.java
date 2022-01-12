@@ -17,7 +17,7 @@ public interface FindUserdetails extends JpaRepository <User, Long>{
 	String getPhonenumber(@Param("phone") String phone);
 	
 	
-	@Query(value="select email from users u where u.id =:usersid", nativeQuery=true)
+	@Query(value="select email from users u where u.userid =:usersid", nativeQuery=true)
 	String getnewemail(@Param("usersid") int usersid);
 	
 

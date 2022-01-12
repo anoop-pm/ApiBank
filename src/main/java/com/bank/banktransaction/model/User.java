@@ -32,7 +32,7 @@ public class User {
     @Column(name="accounttype" , length = 64)
     private String accounttype;
     
-    @NotEmpty
+    @NotNull
     @Column(name="age", length = 45)
     private int age;
     
@@ -44,21 +44,41 @@ public class User {
     @NotEmpty
 	@Email
 	private String email;
+    
+    @NotNull
+    @Column(name="userid", length = 45)
+    private int userid;
      
     @Column( length = 45)
     @NotEmpty
 	@Size(min = 10,max=10,message = "phonenumber should have  10 characters")
     private String phonenumber;
 
-	public User(String name, String dateofbirth, String accounttype, int age, String address, String email,String phonenumber) {
+//	public User(String name, String dateofbirth, String accounttype, int age, String address, String email,String phonenumber,int userid) {
+//		super();
+//		this.name = name;
+//		this.dateofbirth = dateofbirth;
+//		this.accounttype = accounttype;
+//		this.age = age;
+//		this.address = address;
+//		this.email = email;
+//		this.phonenumber = phonenumber;
+//		this.userid = userid;
+//	}
+    
+
+	public User() {
 		super();
-		this.name = name;
-		this.dateofbirth = dateofbirth;
-		this.accounttype = accounttype;
-		this.age = age;
-		this.address = address;
-		this.email = email;
-		this.phonenumber = phonenumber;
+		// TODO Auto-generated constructor stub
+	}
+  
+
+	public int getUserid() {
+		return userid;
+	}
+
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 
 	public Long getId() {

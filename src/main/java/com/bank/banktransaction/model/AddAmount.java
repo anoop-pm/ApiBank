@@ -38,14 +38,11 @@ public class AddAmount {
 	   	
 	   	
 	   	
-public AddAmount( int userid,
-		 int accountnumber,
-		 int deposit) {
-	super();
-	this.userid = userid;
-	this.accountnumber = accountnumber;
-	this.deposit = deposit;
-}
+
+public AddAmount() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
 public Long getId() {
 	return id;
 }

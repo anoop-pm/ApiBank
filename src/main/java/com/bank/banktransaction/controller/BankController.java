@@ -1,9 +1,13 @@
 package com.bank.banktransaction.controller;
 
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.bank.banktransaction.model.AddAccount;
 import com.bank.banktransaction.model.AddAmount;
 import com.bank.banktransaction.model.TransactionDetails;
 import com.bank.banktransaction.model.User;
+import com.bank.banktransaction.repository.FindUserdetails;
 import com.bank.banktransaction.repository.GetamountbalanceRepository;
 import com.bank.banktransaction.repository.findUserid;
 import com.bank.banktransaction.repository.findaccountnumberRepository;
@@ -30,64 +34,49 @@ import com.bank.banktransaction.service.BankService;
 @RestController
 @RequestMapping("/bankapi")
 public class BankController {
-	
-//	 private static final Logger logger = LogManager.getLogger(BankController.class);
-//	
-//
-	
+
 	@Autowired
 	private findUserid finduserid;
 
 	@Autowired
-	private	findaccountnumberRepository accontno;
-    @Autowired
-    private BankService service;
-    
-    @Autowired
+	private findaccountnumberRepository accontno;
+	@Autowired
+	private BankService service;
+
+	@Autowired
 	private GetamountbalanceRepository balancerepository;
-	
-		
-		// Register a User
-		@PostMapping("/user")
-		public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
-			
-			String savedUser = service.saveuser(user);
-			return new ResponseEntity<String>(savedUser, HttpStatus.CREATED);
-		}
-		
-		// Add UserAccount
-		@PostMapping("/useraccount")
-		public ResponseEntity<String> add(@Valid @RequestBody AddAmount amount) {
-			
-				String Depositreport=service.addamount(amount);
-			
-			return new ResponseEntity<String>(Depositreport, HttpStatus.CREATED);
-		}
-		
+	@Autowired
+	private FindUserdetails findusers;
+
+	// Register a User
+	@PostMapping("/user")
+	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
+
+		Object savedUser = service.saveuser(user);
+
+		return new ResponseEntity<Object>(savedUser, HttpStatus.CREATED);
+	}
+
 //		
 //		@PutMapping("/balance/{balance}/{userid}")
 //		public ResponseEntity<String> updatePriceByName(@PathVariable int balance, @PathVariable int userid) {
 //			return new ResponseEntity<String>(balanceRepostory.updatebalance(balance, userid)+balance+"Credited .", HttpStatus.OK);
 //		}
-		
+
 //		@PutMapping("/deposit")
 //		public ResponseEntity<String> updatePriceByName(@PathVariable int balance, @PathVariable int userid) {
 //			return new ResponseEntity<String>(balanceRepostory.updatebalance(balance, userid)+balance+"Credited .", HttpStatus.OK);
 //		}
-		
-		@PutMapping("/deposit")
-		public String deposit(@RequestBody AddAmount amount) {
-		
-		String result=	service.deposit(amount) ;
-			
-			return result;
-		
-			}
-		
-		
-		
-		
-		
+
+	@PutMapping("/deposit")
+	public ResponseEntity<Object> deposit(@Valid @RequestBody AddAmount amount) {
+
+		Object result = service.deposit(amount);
+
+		return new ResponseEntity<Object>(result, HttpStatus.CREATED);
+
+	}
+
 //		@PutMapping("/deposit")
 //		 ResponseEntity<String> deposit(@RequestBody AddAmount amount) {
 //
@@ -95,57 +84,52 @@ public class BankController {
 //			System.out.println("Credited");
 //			return ResponseEntity.ok("User is valid");
 //		}
-		
-		
-		@PostMapping("/addaccount")
-		public ResponseEntity<String> add(@Valid @RequestBody AddAccount addAccount) {
-			
-			
-			String result = service.addAccount(addAccount);
-		
-			return new ResponseEntity<String>(result, HttpStatus.CREATED);
-		}
-		
-		
-		@PutMapping("/transferamount")
-		public String tranfer(@RequestBody TransactionDetails amounttransfer) {
-		
-			
-			try {
-				service.creditamount(amounttransfer) ;
-			Thread.sleep(7000); 
-			}
-			catch(Exception e)
-			{
-				System.out.println(e.getMessage());
-			}
-		   String report=service.messagereader();
-			return report;
-		
-			}
-		
-		
-		@GetMapping("/checkbalance")
-		public ResponseEntity<String> balancec(@Valid @RequestBody AddAmount amount) {
-			
-			int b=service.balancechek(amount);
-			
-			String report=null;
-			if (b==0)
-					{
-				report="not valid account number";
-					}
-			else {
-				report=String.valueOf(b);
-			}
 
-			return new ResponseEntity<String>(String.valueOf(report), HttpStatus.CREATED);
+	// Add new Accounts to transfer
+	@PostMapping("/addaccount")
+	public ResponseEntity<Object> addaccount(@Valid @RequestBody AddAccount addAccount) {
+
+		Object savedaccount = service.addAccount(addAccount);
+
+		return new ResponseEntity<Object>(savedaccount, HttpStatus.CREATED);
+	}
+
+	// Transfer Amount to other account
+	@PutMapping("/transferamount")
+	public ResponseEntity<Object> tranfer(@Valid @RequestBody TransactionDetails amounttransfer) {
+
+		try {
+			service.creditamount(amounttransfer);
+			Thread.sleep(7000);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		
-		
+		String report = service.messagereader();
+		String status = service.statusread();
+		Map<String, String> map = new HashMap<>();
+		map.put("Status", status);
+		map.put("Message", report);
+		return new ResponseEntity<Object>(map, HttpStatus.CREATED);
+
+	}
+
+	@GetMapping("/checkbalance")
+	public ResponseEntity balancec(@Valid @RequestBody AddAmount amount) {
+
+		int b = service.balancechek(amount);
+		Map<String, String> map = new HashMap<>();
+
+		if (b == 0) {
+			map.put("Account Number ", "Not Found ,Please check your Account Number");
+			map.put("Status", "404 ");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
+		} else {
+			map.put("Your Account balance is", String.valueOf(b));
+			map.put("Status", "200 ");
+			return ResponseEntity.status(HttpStatus.OK).body(map);
+
 		}
 
+	}
 
-		
-		
-
+}

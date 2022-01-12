@@ -17,8 +17,8 @@ public class AddAccount {
     private Long id;
     
 	@NotNull
-   @Column(name = "senderaccountnumber", unique = true,  length = 200)
-    private int senderaccountnumber;
+   @Column(name = "receiveraccountnumber", unique = true,  length = 200)
+    private int receiveraccountnumber;
    
 	@NotNull
    @Column(name = "name",  length = 200)
@@ -37,9 +37,9 @@ public AddAccount() {
 	// TODO Auto-generated constructor stub
 }
 
-public AddAccount(int senderaccountnumber, String name, String bankname, String ifsccode) {
+public AddAccount(int receiveraccountnumber, String name, String bankname, String ifsccode) {
 	super();
-	this.senderaccountnumber = senderaccountnumber;
+	this.receiveraccountnumber = receiveraccountnumber;
 	this.name = name;
 	this.bankname = bankname;
 	this.ifsccode = ifsccode;
@@ -53,12 +53,12 @@ public void setId(Long id) {
 	this.id = id;
 }
 
-public int getSenderaccountnumber() {
-	return senderaccountnumber;
+public int getReceiveraccountnumber() {
+	return receiveraccountnumber;
 }
 
-public void setSenderaccountnumber(int senderaccountnumber) {
-	this.senderaccountnumber = senderaccountnumber;
+public void setReceiveraccountnumber(int receiveraccountnumber) {
+	this.receiveraccountnumber = receiveraccountnumber;
 }
 
 public String getName() {
