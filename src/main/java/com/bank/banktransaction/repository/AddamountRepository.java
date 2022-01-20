@@ -6,7 +6,7 @@ import com.bank.banktransaction.model.AddAmount;
 
 
 
-public interface addamountRepository extends JpaRepository <AddAmount, Long>{
+public interface AddamountRepository extends JpaRepository <AddAmount, Long>{
 	
 	
 

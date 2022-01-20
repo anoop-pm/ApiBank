@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import com.bank.banktransaction.model.AddAccount;
 
 
-public interface findreceiveraccnoRepository extends JpaRepository <AddAccount, Integer>
+public interface FindReceiverAccnoRepository extends JpaRepository <AddAccount, Integer>
 {
 
 	

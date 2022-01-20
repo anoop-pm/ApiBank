@@ -20,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.banktransaction.constants.BankConstant;
 import com.bank.banktransaction.model.AddAccount;
 import com.bank.banktransaction.model.AddAmount;
 import com.bank.banktransaction.model.TransactionDetails;
 import com.bank.banktransaction.model.User;
 import com.bank.banktransaction.repository.FindUserdetails;
 import com.bank.banktransaction.repository.GetamountbalanceRepository;
-import com.bank.banktransaction.repository.findUserid;
-import com.bank.banktransaction.repository.findaccountnumberRepository;
+import com.bank.banktransaction.repository.FindUserid;
+import com.bank.banktransaction.repository.FindAccountnumberRepository;
 //import com.bank.banktransaction.repository.addamountupdateRepository;
 import com.bank.banktransaction.service.BankService;
 
@@ -36,10 +37,10 @@ import com.bank.banktransaction.service.BankService;
 public class BankController {
 
 	@Autowired
-	private findUserid finduserid;
+	private FindUserid finduserid;
 
 	@Autowired
-	private findaccountnumberRepository accontno;
+	private FindAccountnumberRepository accontno;
 	@Autowired
 	private BankService service;
 
@@ -107,8 +108,8 @@ public class BankController {
 		String report = service.messagereader();
 		String status = service.statusread();
 		Map<String, String> map = new HashMap<>();
-		map.put("Status", status);
-		map.put("Message", report);
+		map.put(BankConstant.status, status);
+		map.put(BankConstant.messages, report);
 		return new ResponseEntity<Object>(map, HttpStatus.CREATED);
 
 	}
@@ -120,12 +121,12 @@ public class BankController {
 		Map<String, String> map = new HashMap<>();
 
 		if (b == 0) {
-			map.put("Account Number ", "Not Found ,Please check your Account Number");
-			map.put("Status", "404 ");
+			map.put(BankConstant.accountno, BankConstant.notfoundaccountnumber);
+			map.put(BankConstant.status, BankConstant.error);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
 		} else {
-			map.put("Your Account balance is", String.valueOf(b));
-			map.put("Status", "200 ");
+			map.put(BankConstant.messages,BankConstant.balance + String.valueOf(b));
+			map.put(BankConstant.status, BankConstant.ok);
 			return ResponseEntity.status(HttpStatus.OK).body(map);
 
 		}

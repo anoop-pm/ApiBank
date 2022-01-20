@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.bank.banktransaction.model.AddAmount;
 
-public interface findUserid extends JpaRepository <AddAmount, Integer>
+public interface FindUserid extends JpaRepository <AddAmount, Integer>
 {
 //
 //	@Transactional

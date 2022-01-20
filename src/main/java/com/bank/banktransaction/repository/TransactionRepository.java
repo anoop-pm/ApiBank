@@ -9,7 +9,7 @@ import com.bank.banktransaction.model.TransactionDetails;
 
 
 @Repository
-public interface transactionRepository  extends JpaRepository <TransactionDetails, Long>{
+public interface TransactionRepository  extends JpaRepository <TransactionDetails, Long>{
 	
 	
 	@Query(value="select message from messages u where u.mid =:messageidss", nativeQuery=true)
