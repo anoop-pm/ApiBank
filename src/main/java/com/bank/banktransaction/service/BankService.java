@@ -83,15 +83,21 @@ public class BankService {
 	@Autowired
 	private FindUserdetails findusers;
 
-
 	@Autowired
 	private LogTransactionRepository logrepo;
-
 
 	@Autowired
 	private ProducerConfigbank producers;
 
 //	service for register new User
+
+	/**
+	 * This Service for Register A User and and Check Unique Email and Password and
+	 * OutPut is A Map objects And Service Create a Random Account Number And User
+	 * ID Fields Are Fields "name":"Athira", "dateofbirth":"08-08-1995",
+	 * "accounttype":"savings", "age":30, "address":"parayil",
+	 * "email":"athirakundoor@gmail.com", "phonenumber":"7907730284"
+	 */
 
 	public Object saveuser(User user) {
 
@@ -124,7 +130,6 @@ public class BankService {
 		System.out.println(val + "value=" + newuserid);
 
 		// Auto generate accountnumber
-
 		int acc = random.nextInt(8999) + 1000;
 		String newaccno = String.valueOf(val + 1) + String.valueOf(acc) + String.valueOf(val);
 
@@ -149,24 +154,21 @@ public class BankService {
 			amount.setDeposit(0);
 			amountRepostory.save(amount);
 			bankRepository.save(user);
-			String messages = BankConstant.usercreated + newaccno + " "
-					+ BankConstant.userids + newuserid; //Constant
+			String messages = BankConstant.usercreated + newaccno + " " + BankConstant.userids + newuserid; // Constant
 			map.put(BankConstant.status, BankConstant.ok);
 			map.put(BankConstant.messages, messages);
-			
+
 		}
 
 		else if (phoneno != null) {
 			map.put(BankConstant.status, BankConstant.error);
 			map.put(BankConstant.messages, BankConstant.existphone);
-	
 
 		}
 
 		else if (emailid != null) {
 			map.put(BankConstant.status, BankConstant.error);
 			map.put(BankConstant.messages, BankConstant.existemail);
-			
 
 		} else {
 
@@ -176,7 +178,10 @@ public class BankService {
 	}
 
 	// Deposit Service
-
+	/**
+	 * This Service For Deposit Amount Using User Account Number Fields
+	 * "accountnumber":183090, "deposit":3000
+	 */
 	public Object deposit(AddAmount addAmount) {
 
 		// validation
@@ -188,10 +193,10 @@ public class BankService {
 			accountno = findaccountnumber.getaccountnumber(addAmount.getAccountnumber());
 			userid = finduser.getuserid(addAmount.getAccountnumber());
 			newbalance = balancerepository.getamount(addAmount.getAccountnumber());
-			
-			//logger
+
+			// logger
 		} catch (Exception e) {
-			//logger
+			// logger
 
 		}
 
@@ -215,27 +220,25 @@ public class BankService {
 			transaction.setTime(Time);
 			transactionrepostory.save(transaction);
 
-			
+			String depositmessage = BankConstant.deposits + BankConstant.balance + String.valueOf(newamount);
 
-			String depositmessage = BankConstant.deposits 
-					+ BankConstant.balance + String.valueOf(newamount);
-
-			
 			map.put(BankConstant.status, BankConstant.ok);
 			map.put(BankConstant.messages, depositmessage);
 
-		
 		} else {
 			map.put(BankConstant.status, BankConstant.error);
 			map.put(BankConstant.messages, BankConstant.notvalidaccno);
-		
+
 		}
-		
+
 		return map;
 	}
 
 //    Service for create add other Accounts
-
+	/**
+	 * For Create Receiver Account Details Fields "receiveraccountnumber":1436,
+	 * "name":"silpa", "bankname":"SBI", "ifsccode":"SBIN0012"
+	 */
 	public Object addAccount(AddAccount addAccount) {
 
 		int raccno = 0;
@@ -243,37 +246,46 @@ public class BankService {
 		try {
 			raccno = findaccountnumber.getreceiveraccountnumber(addAccount.getReceiveraccountnumber());
 
-			//LOgger
+			// LOgger
 		} catch (Exception e) {
 
 		}
 
 		if (raccno == 0) {
 
-			String accountmessage = BankConstant.accountnumber
-					+ addAccount.getReceiveraccountnumber();
-			
+			String accountmessage = BankConstant.accountnumber + addAccount.getReceiveraccountnumber();
+
 			map.put(BankConstant.status, BankConstant.ok);
 			map.put(BankConstant.messages, accountmessage);
 			accountrepository.save(addAccount);
-		
 
 		} else {
-			
+
 			map.put(BankConstant.status, BankConstant.error);
 			map.put(BankConstant.messages, BankConstant.existaccountnumber);
-			
+
 		}
 		return map;
 	}
 
-	public void creditamount(TransactionDetails transferamount) { 
+	/**
+	 * This Service for Transfer amount from User account to another Account User
+	 * Give SenderAccount Number and Receiver AccountNumber And Amount then this
+	 * service send and produce to a Kafka Topic
+	 * 
+	 * Fields
+	 * 
+	 * "senderaccountnumber":183090, "receiveraccountnumber":1436, "amount":900
+	 * 
+	 * 
+	 */
+	public void creditamount(TransactionDetails transferamount) {
 		int sender = 0;
 		int receiver = 0;
 		int sendamount = transferamount.getAmount();
 
 //    	Kafka Producer
-	
+
 		Producer<String, String> producer = new KafkaProducer<>(producers.kafkaproducer());
 
 		int abcd = transferamount.getSenderaccountnumber();
@@ -313,12 +325,13 @@ public class BankService {
 		transaction.put("ReceiverAccountnumber", raccno);
 		transaction.put("amount", amount);
 		transaction.put("time", now.toString());
-		return new ProducerRecord<>("bankone", accno, transaction.toString());
+		return new ProducerRecord<>("bankinput", accno, transaction.toString());
 	}
 
 	// Cunsume data
-
-	@KafkaListener(topics = "bankfour")
+/**Listen transactionstreamoutput topic and validate the transaction report to be transfer or not Then send mail
+ * {"SenderAccountnumberb":256421,"ReceiverAccountnumber":2000,"Reportb":"Transfered","Amountbb":600,"time":"2022-01-21T11:45:00.018Z"} */
+	@KafkaListener(topics = "transactionstreamoutput")
 	public void consume(String message) throws IOException {
 
 		JSONObject json = new JSONObject(message);
@@ -361,7 +374,6 @@ public class BankService {
 		}
 		int sumaccountbalance = accountbalance - amounttranferint;
 		String valid = "valid";
-		
 
 		String emailid2 = null;
 
@@ -376,7 +388,7 @@ public class BankService {
 		}
 
 		String rep = sendereccno + BankConstant.debit + amounttranferint + BankConstant.balance + accountbalance;
-				
+
 		if (validss.equals(BankConstant.transfer))
 
 		{
@@ -392,22 +404,7 @@ public class BankService {
 
 		}
 	}
-	
-public Properties kafkaproducer()
-{
-	Properties properties = new Properties();
-	// kafka bootstrap server
-	properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
-	properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-	properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-	// producer acks
-	properties.setProperty(ProducerConfig.ACKS_CONFIG, "all"); // strongest producing guarantee
-	properties.setProperty(ProducerConfig.RETRIES_CONFIG, "3");
-	properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "1");
-	// leverage idempotent producer from Kafka 0.11 !
-	properties.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true"); // ensure we don't push duplicates
-	return properties;
-}
+
 
 	public void sendEmail(String rep, String mailid) {
 
@@ -434,6 +431,12 @@ public Properties kafkaproducer()
 	}
 
 	// Service for Balance Check
+	/**
+	 * This Service for Check balance Fields
+	 * 
+	 * "accountnumber":128520
+	 * 
+	 **/
 	public int balancechek(AddAmount amount) {
 
 		int balance = 0;

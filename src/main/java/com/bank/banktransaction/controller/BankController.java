@@ -50,6 +50,8 @@ public class BankController {
 	private FindUserdetails findusers;
 
 	// Register a User
+	
+	/**URL POST:http://localhost:8080/bankapi/user */
 	@PostMapping("/user")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 
@@ -58,17 +60,8 @@ public class BankController {
 		return new ResponseEntity<Object>(savedUser, HttpStatus.CREATED);
 	}
 
-//		
-//		@PutMapping("/balance/{balance}/{userid}")
-//		public ResponseEntity<String> updatePriceByName(@PathVariable int balance, @PathVariable int userid) {
-//			return new ResponseEntity<String>(balanceRepostory.updatebalance(balance, userid)+balance+"Credited .", HttpStatus.OK);
-//		}
-
-//		@PutMapping("/deposit")
-//		public ResponseEntity<String> updatePriceByName(@PathVariable int balance, @PathVariable int userid) {
-//			return new ResponseEntity<String>(balanceRepostory.updatebalance(balance, userid)+balance+"Credited .", HttpStatus.OK);
-//		}
-
+	// Deposit Amount to UserAccount
+	/**URL PUT:http://localhost:8080/bankapi/deposit */
 	@PutMapping("/deposit")
 	public ResponseEntity<Object> deposit(@Valid @RequestBody AddAmount amount) {
 
@@ -78,15 +71,8 @@ public class BankController {
 
 	}
 
-//		@PutMapping("/deposit")
-//		 ResponseEntity<String> deposit(@RequestBody AddAmount amount) {
-//
-//			service.deposit(amount) ;
-//			System.out.println("Credited");
-//			return ResponseEntity.ok("User is valid");
-//		}
-
 	// Add new Accounts to transfer
+	/**URL POST:http://localhost:8080/bankapi/addaccount */
 	@PostMapping("/addaccount")
 	public ResponseEntity<Object> addaccount(@Valid @RequestBody AddAccount addAccount) {
 
@@ -96,6 +82,7 @@ public class BankController {
 	}
 
 	// Transfer Amount to other account
+	/**URL PUT:http://localhost:8080/bankapi/transferamount */
 	@PutMapping("/transferamount")
 	public ResponseEntity<Object> tranfer(@Valid @RequestBody TransactionDetails amounttransfer) {
 
@@ -114,6 +101,8 @@ public class BankController {
 
 	}
 
+	// Checking Balance
+	/**URL GET:http://localhost:8080/bankapi/checkbalance */
 	@GetMapping("/checkbalance")
 	public ResponseEntity balancec(@Valid @RequestBody AddAmount amount) {
 
@@ -125,7 +114,7 @@ public class BankController {
 			map.put(BankConstant.status, BankConstant.error);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
 		} else {
-			map.put(BankConstant.messages,BankConstant.balance + String.valueOf(b));
+			map.put(BankConstant.messages, BankConstant.balance + String.valueOf(b));
 			map.put(BankConstant.status, BankConstant.ok);
 			return ResponseEntity.status(HttpStatus.OK).body(map);
 
