@@ -11,6 +11,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -22,31 +24,38 @@ public class User {
  
     @NotEmpty
     @Column(name = "name",  length = 20)
+    @ApiModelProperty(notes = "The application-specific User Name")
     private String name;
      
     @NotEmpty
     @Column(name="date_of_birth", length = 45)
+    @ApiModelProperty(notes = "The application-specific Date of Birth")
     private String dateofbirth;
     
     @NotEmpty
     @Column(name="accounttype" , length = 64)
+    @ApiModelProperty(notes = "The application-specific Account Type")
     private String accounttype;
     
     @NotNull
     @Column(name="age", length = 45)
+    @ApiModelProperty(notes = "The application-specific Age")
     private int age;
     
     @NotEmpty
     @Column(name="address", length = 200)
+    @ApiModelProperty(notes = "The application-specific Address")
     private String address;
     
     @Column( length = 45)
     @NotEmpty
 	@Email
+	@ApiModelProperty(notes = "The application-specific Email")
 	private String email;
     
     @NotNull
     @Column(name="userid", length = 45)
+    @ApiModelProperty(notes = "The application-specific Auto Generated UserID")
     private int userid;
      
     @Column( length = 45)

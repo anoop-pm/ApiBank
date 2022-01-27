@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "transactionlogs")
 public class TransactionLog {
@@ -16,6 +18,7 @@ public class TransactionLog {
     private Long id;
      
    @Column(name = "logs",  length = 220)
+   @ApiModelProperty(notes = "The application-specific Transaction Logs Details")
     private String logs;
 
 public TransactionLog() {

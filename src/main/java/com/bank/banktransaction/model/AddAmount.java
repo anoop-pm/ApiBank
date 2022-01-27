@@ -9,6 +9,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name = "useraccounts")
 public class AddAmount {
@@ -21,17 +23,20 @@ public class AddAmount {
 //	  @NotBlank(message = "Userid is mandatory")
 	   @Column(name = "userid",  length = 20)
 	   @NotNull
-	    private int userid;
+	   @ApiModelProperty(notes = "The application-specific Auto Generated User ID")
+	   private int userid;
 	  
 //	  @NotBlank(message = "accountnumber is mandatory")
 	   	@Column(name = "accountnumber",   length = 200)
 	   	@NotNull
+	   	@ApiModelProperty(notes = "The application-specific Auto Generated Account Number")
 	    private int accountnumber;
 //	   
 //	   @Column(name = "transactiontype",  length = 20)
 //	    private String transactiontype;
 //	   
 //	  @NotEmpty(message = "Deposit is mandatory")
+	   	@ApiModelProperty(notes = "The application-specific Deposit")
 	   	@Column(name = "deposit",  length = 20)
 	   	@NotNull
 	    private int deposit;

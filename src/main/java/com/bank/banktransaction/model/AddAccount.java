@@ -8,8 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "accounts")
+@ApiModel(description="All details about the Add Account. ")
 public class AddAccount {
 	
 	@Id
@@ -18,18 +22,22 @@ public class AddAccount {
     
 	@NotNull
    @Column(name = "receiveraccountnumber", unique = true,  length = 200)
+	   @ApiModelProperty(notes = "The application-specific receiver acc no")
     private int receiveraccountnumber;
    
 	@NotNull
    @Column(name = "name",  length = 200)
+	   @ApiModelProperty(notes = "The application-specific NAme")
    private String name;
 	
 	@NotNull
    @Column(name = "bankname",  length = 200)
+	   @ApiModelProperty(notes = "The application-specific User name")
    private String bankname;
    
 	@NotNull
    @Column(name = "ifsccode",  length = 200)
+	   @ApiModelProperty(notes = "The application-specific IFSC ID")
    private String ifsccode;
 
 public AddAccount() {

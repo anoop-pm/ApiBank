@@ -387,7 +387,7 @@ public class BankService {
 
 		}
 
-		String rep = sendereccno + BankConstant.debit + amounttranferint + BankConstant.balance + accountbalance;
+		String rep = BankConstant.emailssubject + " " + amounttranferint +BankConstant.emaildebit+ BankConstant.balance + accountbalance;
 
 		if (validss.equals(BankConstant.transfer))
 
@@ -411,7 +411,7 @@ public class BankService {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setTo(mailid);
 
-		msg.setSubject("Testing Transaction ");
+		msg.setSubject(" Transaction Status ");
 		msg.setText(rep);
 
 		javaMailSender.send(msg);

@@ -6,6 +6,8 @@ public class BankConstant {
 	
 	public static String debit ="Debited";
 	
+	public static String emaildebit =" rs has been Debited from Your Account";
+	
 	public static String Erroraccount ="Please Check account Number";
 	
 	public static String transfer ="Transfered";
@@ -21,25 +23,27 @@ public class BankConstant {
 	public static String error ="404";
 	
 	//User Creation
-	public static String usercreated="Account Registered Successfully and Your account no is : -";
-	public static String userids =" And User Id Is : -";
-	public static String existphone ="Already Exist Phone no";
-	public static String existemail ="Already Exist Email";
+	public static String usercreated="Account Registered Successfully and Your account no is ";
+	public static String userids =" And Your User Id is ";
+	public static String existphone ="Phone no Already Exist ";
+	public static String existemail ="Email Already Exist ";
 	
 	//Deposit
 	
-	public static String deposits ="Deposited Successfully ";
+	public static String deposits ="Amount has been creadited ";
 	
-	public static String balance =", Your Account balance is :";
-	public static String notvalidaccno ="Account Number Not Valid";
+	public static String emailssubject="Transaction has been done using your Banking Solutions Application";
+	
+	public static String balance =", Your Account balance is ";
+	public static String notvalidaccno ="Account number doesn't exist";
 	
 	
 	//Add Accounts
 	
-	public static String accountnumber ="Account added Successfully the account Number is ";
-	public static String existaccountnumber ="Already Exist Account Number";
+	public static String accountnumber ="Account added Successfully the Account Number is  ";
+	public static String existaccountnumber ="Account Number Already Exist ";
 	
-	public static String notfoundaccountnumber ="Not Found Account Number";
+	public static String notfoundaccountnumber ="Account Number Not Found ";
 	
 
 	

@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name = "transactions")
@@ -20,18 +22,23 @@ public class TransactionDetails {
 	    private int userid;
 	   
 	   @Column(name = "senderaccountnumber",  length = 20)
+	   @ApiModelProperty(notes = "The application-specific Sender account number")
 	    private int senderaccountnumber;
 	   
 	   @Column(name = "receiveraccountnumber",  length = 20)
+	   @ApiModelProperty(notes = "The application-specific Receiver Account Number")
 	    private int receiveraccountnumber;
 	   
 	   @Column(name = "amount",  length = 20)
+	   @ApiModelProperty(notes = "The application-specific Receiver Amount")
 	    private int amount;
 	   
 	   @Column(name = "details",  length = 20)
+	   @ApiModelProperty(notes = "The application-specific Details")
 	    private String details;
 	     
 	    @Column(name = "time",  length = 220)
+	    @ApiModelProperty(notes = "The application-specific Instant Time")
 	    private String time;
 
 
